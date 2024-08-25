@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  mosquitto-broker:
+    image: eclipse-mosquitto
+    container_name: mosquitto-broker
+    networks:
+      - mqtt-network
+    ports:
+      - "1883:1883"
+
+  mqtt-reader:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: mqtt-reader
+    networks:
+      - mqtt-network
+
+networks:
+  mqtt-network:
+    driver: bridge
